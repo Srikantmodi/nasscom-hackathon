@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced NeonPizza</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.css" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00f7ff;
+            --neon-pink: #ff69b4;
+            --neon-yellow: #ffdd00;
+            --neon-orange: #ff6b35;
+            --deep-orange: #ff4500;
+            --warm-yellow: #ffd700;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a40, #120E43);
+            color: white;
+        }
+
+        .neon-text {
+            text-shadow: 0 0 10px var(--neon-yellow),
+                         0 0 20px var(--neon-orange);
+            animation: neon-pulse 1.5s infinite alternate;
+        }
+
+        @keyframes neon-pulse {
+            from { text-shadow: 0 0 10px var(--neon-yellow), 0 0 20px var(--neon-orange); }
+            to { text-shadow: 0 0 15px var(--neon-yellow), 0 0 30px var(--neon-orange); }
+        }
+
+        .gradient-border {
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 165, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .gradient-border:hover {
+            box-shadow: 0 0 20px var(--neon-orange);
+            transform: translateY(-5px);
+        }
+        .hero-section {
+            height: 400px;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                        url('/api/placeholder/1920/400') center/cover;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            padding-top: 80px;
+        }
+
+        .hero-text {
+            font-size: 3em;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtext {
+            font-size: 1.2em;
+            color: var(--neon-yellow);
+        }
+
+        /* Header and Navigation */
+        header {
+            background: url('https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YSUyMGNhZmUlMjBwaXp6YSUyMGltYWdlJTIwZm9yJTIwYmFja2dyb3VuZCUyMGNvdmVyJTIwb2YlMjB3ZWJwYWdlfGVufDB8fDB8fHww?auto=format&fit=crop&w=600&h=500') no-repeat center center;
+            background-size: cover;
+    
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem;
+        }
+        .sign-in-section {
+
+            max-width: 400px;
+            margin: 4rem auto;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            border: 1px solid var(--neon-orange);
+        }
+
+        .sign-in-section h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--neon-yellow);
+        }
+
+        .sign-in-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .sign-in-form input {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 165, 0, 0.3);
+            border-radius: 8px;
+            color: white;
+        }
+
+        .sign-in-form button {
+            background: linear-gradient(45deg, var(--deep-orange), var(--warm-yellow));
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .sign-in-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px var(--neon-orange);
+        }
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            /* overflow-x: auto;
+            white-space: nowrap; */
+        }
+
+        .logo {
+            font-size: 2em;
+            color: var(--neon-yellow);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            /* background: url('https://images.unsplash.com/photo-1604382355076-af4b0eb60143?auto=format&fit=crop&w=2000') no-repeat center center; */
+            background-size: cover;
+            padding: 1rem;
+            border-radius: 1rem;
+        }
+
+        /* Enhanced Dropdown Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-btn {
+            background: linear-gradient(45deg, var(--deep-orange), var(--warm-yellow));
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: rgba(0, 0, 0, 0.95);
+            min-width: 250px;
+            border-radius: 10px;
+            padding: 15px;
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            color: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .menu-item:hover {
+            background: linear-gradient(45deg, var(--deep-orange), var(--warm-yellow));
+        }
+
+        .menu-item input[type="radio"] {
+            margin-right: 12px;
+            accent-color: var(--neon-orange);
+        }
+        /* Seating Categories */
+        .seating-categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .seating-categories label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .seating-categories label:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .seating-categories input[type="radio"] {
+            accent-color: var(--neon-orange);
+        }
+
+        /* Menu Section */
+        .menu-section {
+            max-width: 1200px;
+            margin: 120px auto 0;
+            padding: 2rem;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .menu-card {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .menu-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .menu-card-content {
+            padding: 1.5rem;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 4rem 0;
+            margin-top: 4rem;
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 165, 0, 0.3);
+            border-radius: 8px;
+            color: white;
+        }
+
+        /* Sign In Form */
+        .sign-in-section {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .sign-in-form input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 165, 0, 0.3);
+            border-radius: 8px;
+            color: white;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, var(--deep-orange), var(--warm-yellow));
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px var(--neon-orange);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+            position: relative;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .modal-content h3 {
+            color: var(--neon-yellow);
+            margin-top: 1rem;
+        }
+
+        .modal-content p {
+            color: #333;
+            margin: 10px 0;
+        }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo neon-text">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 2a10 10 0 0 1 10 10"></path>
+                </svg>
+                NeonPizza
+            </div><br><br>
+            <section class="hero-section">
+                <h1 class="hero-text neon-text">Welcome to NeonPizza</h1>
+                <p class="hero-subtext">Experience the yummiest of Pizza</p>
+                <br><br>
+            </section>
+            <div style="display: flex; gap: 20px;">
+                <!-- Pizza Menu Dropdown -->
+                <div class="dropdown">
+                    <button class="dropdown-btn">Pizzas</button>
+                    <div class="dropdown-content">
+                        <label class="menu-item">
+                            <input type="radio" name="pizza"> Margherita Classic ($14.99)
+                        </label>
+                        <label class="menu-item">
+                            <input type="radio" name="pizza"> Pepperoni Feast ($16.99)
+                        </label>
+                        <label class="menu-item">
+                            <input type="radio" name="pizza"> Veggie Supreme ($15.99)
+                        </label>
+                        <label class="menu-item">
+                            <input type="radio" name="pizza"> BBQ Chicken ($17.99)
+                        </label>
+                        <label class="menu-item">
+                            <input type="radio" name="pizza"> Mediterranean ($18.99)
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Beverages Dropdown -->
+                <div class="dropdown">
+                    <button class="dropdown-btn">Beverages</button>
+                    <div class="dropdown-content">
+                        <label class="menu-item">
+                            <input type="radio" name="beverage"> Coca Cola ($2.49)
+                        </label>
+                        <label class="menu-item">
+                            <input type="radio" name="beverage"> Fresh Lime Soda ($3.49)
+                        </label>
+                        <label class="menu-item">
+                            <input type="radio" name="beverage"> Mango Lassi ($4.49)
+                        </label>
+                        <label class="menu-item">
+                            <input type="radio" name="beverage"> Sparkling Water ($1.99)
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Coffee Menu -->
+                <div class="dropdown">
+                    <button class="dropdown-btn">Coffee</button>
+                    <div class="dropdown-content">
+                        <label class="menu-item">
+                            <input type="radio" name="coffee"> Espresso ($2.99)
+                        </label>
+                        <label class="menu-item">
+                            <input type="radio" name="coffee"> Cappuccino ($3.99)
+                        </label>
+                        <label class="menu-item">
+                            <input type="radio" name="coffee"> Caramel Latte ($4.49)
+                        </label>
+                        <label class="menu-item">
+                            <input type="radio" name="coffee"> Irish Coffee ($5.99)
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Combos Dropdown -->
+                <div class="dropdown">
+                    <button class="dropdown-btn">Combos</button>
+                    <div class="dropdown-content">
+                        <label class="menu-item">
+                            <input type="radio" name="combo"> Family Pack ($39.99)
+                        </label>
+                        <label class="menu-item">
+                            <input type="radio" name="combo"> Date Night Special ($29.99)
+                        </label>
+                        <label class="menu-item">
+                            <input type="radio" name="combo"> Party Pack ($49.99)
+                        </label>
+                        <label class="menu-item">
+                            <input type="radio" name="combo"> Student Special ($19.99)
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Snacks Dropdown -->
+                <div class="dropdown">
+                    <button class="dropdown-btn">Snacks</button>
+                    <div class="dropdown-content">
+                        <label class="menu-item">
+                            <input type="radio" name="snack"> Garlic Bread ($4.99)
+                        </label>
+                        <label class="menu-item">
+                            <input type="radio" name="snack"> Chicken Wings ($8.99)
+                        </label>
+                        <label class="menu-item">
+                            <input type="radio" name="snack"> Mozzarella Sticks ($6.99)
+                        </label>
+                        <label class="menu-item">
+                            <input type="radio" name="snack"> Loaded Nachos ($7.99)
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+<br><br><br><br><br><br><br><br><br>
+    <!-- Seating Categories Section -->
+    <section class="seating-categories">
+        <label>
+            <input type="radio" name="seating" value="indoor"> Indoor
+        </label>
+        <label>
+            <input type="radio" name="seating" value="outdoor"> Outdoor
+        </label>
+        <label>
+            <input type="radio" name="seating" value="rooftop"> Rooftop
+        </label>
+        <label>
+            <input type="radio" name="seating" value="private"> Private
+        </label>
+    </section>
+    <!-- Featured Menu Section -->
+    <section class="menu-section">
+        <h2 class="section-title neon-text" style="text-align: center; margin-bottom: 3rem;">Our Special Menu</h2>
+        <div class="menu-grid">
+            <!-- Menu Item 1 -->
+            <div class="menu-card gradient-border">
+                <img src="/supreme.jpeg" alt="Supreme Pizza">
+                <div class="menu-card-content">
+                    <h3 style="color: var(--neon-yellow);">Supreme Pizza</h3>
+                    <p style="color: #ccc; margin: 10px 0;">Loaded with pepperoni, mushrooms, bell peppers, onions, and extra cheese</p>
+                    <p style="color: var(--neon-orange); font-size: 1.2em;">$18.99</p>
+                    <button class="submit-btn">Add to Cart</button>
+                </div>
+            </div>
+
+            <!-- Menu Item 2 -->
+            <div class="menu-card gradient-border">
+                <img src="/bbqch.jpeg" alt="BBQ Chicken Pizza">
+                <div class="menu-card-content">
+                    <h3 style="color: var(--neon-yellow);">BBQ Chicken Pizza</h3>
+                    <p style="color: #ccc; margin: 10px 0;">Grilled chicken, BBQ sauce, red onions, and cilantro</p>
+                    <p style="color: var(--neon-orange); font-size: 1.2em;">$17.99</p>
+                    <button class="submit-btn">Add to Cart</button>
+                </div>
+            </div>
+
+            <!-- Menu Item 3 -->
+            <div class="menu-card gradient-border">
+                <img src="/vegi.jpeg" alt="Vegetarian Delight">
+                <div class="menu-card-content">
+                    <h3 style="color: var(--neon-yellow);">Vegetarian Delight</h3>
+                    <p style="color: #ccc; margin: 10px 0;">Fresh vegetables, olives, and herb-infused olive oil</p>
+                    <p style="color: var(--neon-orange); font-size: 1.2em;">$16.99</p>
+                    <button class="submit-btn">Add to Cart</button>
+                </div>
+            </div>
+
+            <!-- Menu Item 4 -->
+            <div class="menu-card gradient-border">
+                <img src="/pepeoni.jpeg" alt="Spicy Pepperoni">
+                <div class="menu-card-content">
+                    <h3 style="color: var(--neon-yellow);">Spicy Pepperoni</h3>
+                    <p style="color: #ccc; margin: 10px 0;">Double pepperoni, jalapeños, and spicy marinara sauce</p>
+                    <p style="color: var(--neon-orange); font-size: 1.2em;">$16.99</p>
+                    <button class="submit-btn">Add to Cart</button>
+                </div>
+            </div>
+            <!-- Menu Item 5 -->
+            <div class="menu-card gradient-border">
+                <img src="/cheese burger.jpeg" alt="Cheesy burger">
+                <div class="menu-card-content">
+                    <h3 style="color: var(--neon-yellow);">Cheesy burger</h3>
+                    <p style="color: #ccc; margin: 10px 0;">cheesy large burger</p>
+                    <p style="color: var(--neon-orange); font-size: 1.2em;">$15.99</p>
+                    <button class="submit-btn">Add to Cart</button>
+                </div>
+            </div>
+             <!-- Menu Item 6 -->
+             <div class="menu-card gradient-border">
+                <img src="/chicken burger.jpeg" alt="chicken burger">
+                <div class="menu-card-content">
+                    <h3 style="color: var(--neon-yellow);">Chicken  burger</h3>
+                    <p style="color: #ccc; margin: 10px 0;">chicken grill burger</p>
+                    <p style="color: var(--neon-orange); font-size: 1.2em;">$15.99</p>
+                    <button class="submit-btn">Add to Cart</button>
+                </div>
+            </div>
+            <!-- Menu Item 7 -->
+            <div class="menu-card gradient-border">
+                <img src="/french fries.jpeg" alt="french fries">
+                <div class="menu-card-content">
+                    <h3 style="color: var(--neon-yellow);">French fries</h3>
+                    <p style="color: #ccc; margin: 10px 0;">crispy french perry perry fries</p>
+                    <p style="color: var(--neon-orange); font-size: 1.2em;">$15.99</p>
+                    <button class="submit-btn">Add to Cart</button>
+                </div>
+            </div>
+            <!-- Menu Item 8 -->
+            <div class="menu-card gradient-border">
+                <img src="/capechino.jpeg " alt="capechino">
+                <div class="menu-card-content">
+                    <h3 style="color: var(--neon-yellow);">capechino</h3>
+                    <p style="color: #ccc; margin: 10px 0;">capechino coffee </p>
+                    <p style="color: var(--neon-orange); font-size: 1.2em;">$15.99</p>
+                    <button class="submit-btn">Add to Cart</button>
+                </div>
+            </div>
+            <!-- Menu Item 9 -->
+            <div class="menu-card gradient-border">
+                <img src="/mojito.jpeg " alt="mint mojito">
+                <div class="menu-card-content">
+                    <h3 style="color: var(--neon-yellow);">mint mojito</h3>
+                    <p style="color: #ccc; margin: 10px 0;">chilled mint mojito </p>
+                    <p style="color: var(--neon-orange); font-size: 1.2em;">$15.99</p>
+                    <button class="submit-btn">Add to Cart</button>
+                </div>
+            </div>
+
+            <!-- Menu Item 10 -->
+            <div class="menu-card gradient-
+            <section class="sign-in-section">
+                <br>
+                <h2 class="neon-text">Sign In</h2>
+                <br>
+                <form class="sign-in-form">
+                    <input type="Name" placeholder="name" required><br>
+                    <input type="email" placeholder="Email" required><br>
+                    <button type="submit" class="neon-text">Sign In</button>
+                    <p style="text-align: center; margin-top: 1rem; color: #ccc;">
+                        Don't have an account? <a href="#" style="color: var(--neon-yellow);">Sign Up</a>
+                    </p>
+                </form>
+Version 2 of 2

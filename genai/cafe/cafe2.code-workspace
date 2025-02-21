@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"name": "cafe",
+			"path": "."
+		},
+		{
+			"name": "pizzo",
+			"path": "../pizzo"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "cafe"
+	}
+}
